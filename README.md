@@ -13,7 +13,7 @@
  - [CSS](#)
  	* [基础设施](#)
  	* [书写格式](#)
- 	* [注释方法](#)
+ 	* [代码组织](#)
  - [JavaScript](#)
  - [jQuery](#)
 
@@ -282,13 +282,10 @@
 			}
 
 - 根据属性的重要性按顺序书写
-	1. Positioning 位置
-	2. Box model 盒模型
-	3. Typographic 排版
-	3. Visual 外观
+	- Positioning 位置 > Box model 盒模型 > Typographic 排版 > Visual 外观 > Misc 混杂
 
 			.declaration-order {
-			    /* Positioning */
+			    /* Positioning 位置*/
 			    position: absolute;
 			    top: 0;
 			    right: 0;
@@ -296,30 +293,239 @@
 			    left: 0;
 			    z-index: 100;
 
-			    /* Box-model */
+			    /* Box-model 盒模型*/
 			    display: block;
 			    float: right;
 			    width: 100px;
 			    height: 100px;
 
-			    /* Typography */
+			    /* Typography 排版*/
 			    font: normal 13px "Helvetica Neue", sans-serif;
 			    line-height: 1.5;
 			    color: #333;
 			    text-align: center;
 
-			    /* Visual */
+			    /* Visual 外观*/
 			    background-color: #f5f5f5;
 			    border: 1px solid #e5e5e5;
 			    border-radius: 3px;
 
-			    /* Misc */
+			    /* Misc 混杂*/
 			    opacity: 1;
 			}
 
+####代码组织
+- 以模块为单位组织代码，使用继承以及提取公共样式，提高代码复用率
 
+		<!-- ui-box:模块基类，用于定义模块的公共结构样式 -->
+		<div class="ui-box">
+
+		    <!-- ui-box-head:模块头部 -->
+		    <div class="ui-box-head">
+		        <h3 class="ui-box-head-title">标题</h3>
+		    </div>
+
+		    <!-- ui-box-container:模块内容 -->
+		    <div class="ui-box-container">
+		        <div class="ui-box-content">内容</div>
+		    </div>
+		</div>
+
+####注释方法
+- 块状注释，用于布局结构或模块，注释保持统一的缩进对齐
+
+		/* 块状注释文字
+		 * 块状注释文字
+		 * 块状注释文字
+		 */
+		.ui-box {}
+		.ui-box-head {}
+		.ui-box-head .ui-box-head-title{}
+		.ui-box-container{}
+
+- 单行注释，写在被注释对象的上一行，对属性及值的注释写于分号后
+
+		/* 单行注释文字 */
+		.ui-box {
+		    border: 1px solid #ccc;
+		}
+		.ui-box-head{
+		    height:20px;
+		    line-height:20px;/* 这里是对line-height的一个注释 */
+		    overflow:hidden;
+		}
 
 ##JavaScript
-####
-##jQuery
+####缩进,分号,换行,空格
+- 4个空格保持代码缩进
+- 在语句末尾使用分号结束，清楚语句的起止位置
+- 多于120个字符应换行，优先在左花括号后、操作符后进行换行；
+- if else前后留有空格
+	
+		if (typeof state === "undefined" ||
+		    typeof state.cdnrejected === "undefined" ||
+		    state.cdnrejected !== true) {
+		    url = "http://pub.state.com/qqfind/js/location4.js";
+		} else {
+		    url = "http://find.state.com/js/location4.js";
+		}
+
+####括号对齐
+- 括号前后有空格， 花括号起始 不另换行，结尾新起一行
+- 花括号必须要， 即使内容只有一行， 决不允许右边第二种情况
+- 涉及 if for while do...while try...catch...finally 的地方都必须使用花括号
+	
+		// Good
+		if (condition) {
+		    doSomething();
+		}
+		
+		// Bad
+		if (condition)
+		    doSomething();
+		    doSomethingElse();
+
+####变量声明
+- 所有函数内的变量声明应该放在函数内头部，只使用一个 var(多了JSLint报错)， 一个变量一行， 在行末跟注释
+- 优先使用单引号（'）而不是双引号（"）表示字符常量
+
+		function doSomethingWithItems(items) {
+
+		    var value = 10,    // 注释
+		        result = value + 10,    // 注释
+		        name = 'rose',	 // 注释
+		        i,    // 注释
+		        len;    // 注释
+
+		    for (i=0, len=items.length; i < len; i++) {
+		        doSomething(items[i]);
+		    }
+		}
+
+####函数声明
+- 函数声明 和 函数表达式 的不同，函数表达式 的（）前后必须有空格，而函数生命 在有函数名的时候不需要空格， 没有函数名的时候需要空格。
+- 函数调用括号前后不需要空格
+- 立即执行函数的写法, 最外层必须包一层括号
+- "use strict" 决不允许全局使用， 必须放在函数的第一行， 可以用自执行函数包含大的代码段, 如果 "use strict" 在函数外使用， JSLint 和 JSHint 均会报错
+
+		function doSomething(item) {
+	    	// do something
+		}
+
+		var doSomething = function (item) {
+		    // do something
+		}
+
+
+		// Good
+		doSomething(item);
+
+		// Bad: Looks like a block statement
+		doSomething (item);
+
+
+		// Good
+		var value = (function() {
+
+		    // function body
+		    return {
+		        message: "Hi"
+		    }
+		}());
+
+
+		// Good
+		(function() {
+		    "use strict";
+
+		    function doSomething() {
+		        // code
+		    }
+
+		    function doSomethingElse() {
+		        // code
+		    }
+
+		})();
+
+####undefined使用
+- 永远不要直接使用undefined进行变量判断
+- 使用字符串 "undefined" 对变量进行判断
+
+		// Bad
+		var person;
+		console.log(person === undefined);    //true
+
+		// Good
+		console.log(typeof person);    // "undefined"
+
+####Object对象
+
+	// Bad
+	var team = new Team();
+	team.title = "AlloyTeam";
+	team.count = 25;
+
+	// Good  semi colon 采用 Followed by space 的形式
+	var team = {
+	    title: "AlloyTeam",
+	    count: 25
+	};
+
+####Array数组
+
+	// Bad
+	var colors = new Array("red", "green", "blue");
+	var numbers = new Array(1, 2, 3, 4);
+
+
+	// Good
+	var colors = [ "red", "green", "blue" ];
+	var numbers = [ 1, 2, 3, 4 ];
+
+####switch
+- 花括号必须要， 即使内容只有一行;
+- switch和括号之间有空格， case需要缩进; 
+- break之后跟下一个case中间留一个blank line;
+
+		switch (condition) {
+		    case "first":
+		        // code
+		        break;
+
+		    case "third":
+		        // code
+		        break;
+
+		    default:
+		    // code
+		}
+
+####for
+- 普通for循环, 分号后留有一个空格， 判断条件等内的操作符两边不留空格
+- 前置条件如果有多个，逗号后留一个空格
+- for-in 一定要有 hasOwnProperty 的判断， 否则 JSLint 或者 JSHint 都会有一个 warn
+	
+		var values = [ 1, 2, 3, 4, 5, 6, 7 ],
+		    i, len;
+
+		for (i=0, len=values.length; i<len; i++) {
+		    process(values[i]);
+		}
+
+
+
+		var prop;
+		for (prop in object) {
+
+		    // 注意这里一定要有 hasOwnProperty 的判断， 否则 JSLint 或者 JSHint 都会有一个 warn ！
+		    if (object.hasOwnProperty(prop)) {
+		        console.log("Property name is " + prop);
+		        console.log("Property value is " + object[prop]);
+		    }
+		}
+
+####其他
+- 避免使用`a==b`, `a!=b`， 推荐用严格比较条件 `a===b`, `a!==b`
+- 非特殊业务， 禁用`eval`,`with`
 
