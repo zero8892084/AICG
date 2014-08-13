@@ -3,8 +3,11 @@
 ##文档目录
  - [目录结构](#)
  - [命名规范](#)
- 	* [Class类名](#)
+ 	* [CSS 类名](#)
  	* [JavaScript 变量命名](#)
+ 	* [HTML,TPL 文件命名](#)
+ 	* [CSS,LESS 文件命名](#)
+ 	* [JavaScript,JSON 文件命名](#)
  - [HTML](#)
  	* [基础设施](#)
  	* [书写格式](#)
@@ -15,9 +18,22 @@
  	* [书写格式](#)
  	* [代码组织](#)
  - [JavaScript](#)
- - [jQuery](#)
-
-
+ 	* [缩进,分号,换行,空格](#)
+ 	* [空行](#)
+ 	* [括号对齐](#)
+ 	* [变量声明](#)
+ 	* [函数声明](#)
+ 	* [undefined使用](#)
+ 	* [Object对象](#)
+ 	* [Array数组](#)
+ 	* [switch](#)
+ 	* [for](#)
+ 	* [杂项](#)
+- [注释规范](#)
+ 	* [HTML 注释](#)
+ 	* [CSS 注释](#)
+ 	* [JavaScript 注释](#)
+ 	* [JsDoc 注释](#)
 ##目录结构
 ```
 ├── aimd
@@ -32,7 +48,7 @@
 └── index.md
 ```
 ##命名规范
-####Class 命名
+####CSS 类名
 - 保持 Class 命名为全小写，可以使用短划线（不要使用下划线和 camelCase驼峰式命名）
 - 短划线应该作为相关类的自然间断。(例如，`.btn` 和 `.btn-danger`)。
 - 避免过度使用简写。.btn 可以很好地描述 button，但是 .s 不能代表任何元素。
@@ -74,6 +90,102 @@
 		    this.name = name
 		}
 
+####HTML，TPL文件命名
+- 多个单词组成时，采用中划线连接方式，比如说：error-report.html
+
+####CSS，LESS文件命名
+- 多个单词组成时，采用中划线连接方式，比如说: retina-sprites.scss
+
+####JavaScript，JSON文件命名
+- 多个单词组成时，采用中划线连接方式，比如说：账号模型文件 account-model.js
+
+##注释规范
+####HTML注释
+- 代码说明的注释方法，采用标签闭合的写法，与HTML标签保持格式统一
+		
+		<!-- 头部 -->
+		<div class="header">
+		    <!-- 导航 -->
+		    <ul class="nav">
+		        <li><a href="#">nav1</a></li>
+		        <li><a href="#">nav2</a></li>
+		    </ul>
+		    <!-- /导航 -->
+		</div>
+		<!-- /头部 -->
+
+- 代码本身的注释方法，单行代码的注释也保持在同行，两端空格；多行代码的注释起始和结尾都另起一行并左缩进对齐
+		
+		<!-- <h1 class="header"><a href="#">LOGO</a></h1> -->
+		<!--
+		<ul class="nav">
+		    <li><a href="#">nav1</a></li>
+		    <li><a href="#">nav2</a></li>
+		</ul>
+		-->
+
+- 注释在IE6中的BUG
+	- 如果两个浮动元素之间存在注释，那么可能导致布局错位或文字的BUG
+	- 通常这种情况，把注释去掉是最好的解决方案
+
+####CSS注释
+- 单行注释，写在被注释对象的上一行，对属性及值的注释写于分号后
+
+		/* 单行注释文字 */
+		.ui-box {
+		    border: 1px solid #ccc;
+		}
+		.ui-box-head{
+		    height:20px;
+		    line-height:20px;/* 这里是对line-height的一个注释 */
+		    overflow:hidden;
+		}
+
+- 块状注释，用于布局结构或模块，注释保持统一的缩进对齐，前面留空一行
+
+		/* 
+		 * 块状注释文字
+		 * 块状注释文字
+		 */
+		.ui-box {}
+		.ui-box-head {}
+		.ui-box-head .ui-box-head-title{}
+		.ui-box-container{}
+
+####JavaScript 注释
+- 单行注释
+	* 双斜线后，必须跟注释内容保留一个空格；
+	* 可独占一行, 前边不许有空行, 缩进与下一行代码保持一致；
+	* 位于一个代码行的末尾，双斜线距离分号四个空格，双斜线后始终保留一个空格
+
+			// Good
+			if (condition) {
+
+			    // if you made it here, then all security checks passed
+			    allowed();
+			}
+
+			var zhangsan = "zhangsan";    // 双斜线距离分号四个空格，双斜线后始终保留一个空格
+
+- 块状注释
+	* 注释代码最少三行，保持统一的缩进，前面留空一行
+	* 用于难于理解或者存在错误的代码段，也适用于HACK代码和逻辑较强的代码注释
+
+			/*
+			 * 注释内容与星标前保留一个空格
+			 */
+
+
+####JsDoc 注释
+- JsDoc 是一个根据注释规范自动生成文档的工具
+- 详细的文档规范可参考 [usejsdoc.org](http://usejsdoc.org/)
+
+		/**
+		 * here boy, look here , here is girl
+		 * @method lookGril
+		 * @param {Object} balabalabala
+		 * @return {Object} balabalabala
+		 */
 
 ##HTML
 ####基础设施
@@ -146,33 +258,6 @@
 - 使用div代替table进行布局，但是表现具有明显表格的数据，table还是首选
 - 实用高于完美，尽量的遵循 HTML 标准和语义，但是不应该以浪费实用性作为代价
 
-####注释方法
-- 代码说明的注释方法，采用标签闭合的写法，与HTML标签保持格式统一
-		
-		<!-- 头部 -->
-		<div class="header">
-		    <!-- 导航 -->
-		    <ul class="nav">
-		        <li><a href="#">nav1</a></li>
-		        <li><a href="#">nav2</a></li>
-		    </ul>
-		    <!-- /导航 -->
-		</div>
-		<!-- /头部 -->
-
-- 代码本身的注释方法，单行代码的注释也保持在同行，两端空格；多行代码的注释起始和结尾都另起一行并左缩进对齐
-		
-		<!-- <h1 class="header"><a href="#">LOGO</a></h1> -->
-		<!--
-		<ul class="nav">
-		    <li><a href="#">nav1</a></li>
-		    <li><a href="#">nav2</a></li>
-		</ul>
-		-->
-
-- 注释在IE6中的BUG
-	- 如果两个浮动元素之间存在注释，那么可能导致布局错位或文字的BUG
-	- 通常这种情况，把注释去掉是最好的解决方案
 
 
 ##CSS
@@ -331,29 +416,6 @@
 		    </div>
 		</div>
 
-####注释方法
-- 块状注释，用于布局结构或模块，注释保持统一的缩进对齐
-
-		/* 块状注释文字
-		 * 块状注释文字
-		 * 块状注释文字
-		 */
-		.ui-box {}
-		.ui-box-head {}
-		.ui-box-head .ui-box-head-title{}
-		.ui-box-container{}
-
-- 单行注释，写在被注释对象的上一行，对属性及值的注释写于分号后
-
-		/* 单行注释文字 */
-		.ui-box {
-		    border: 1px solid #ccc;
-		}
-		.ui-box-head{
-		    height:20px;
-		    line-height:20px;/* 这里是对line-height的一个注释 */
-		    overflow:hidden;
-		}
 
 ##JavaScript
 ####缩进,分号,换行,空格
@@ -369,6 +431,11 @@
 		} else {
 		    url = "http://find.state.com/js/location4.js";
 		}
+
+####空行
+- 方法之间加
+- 单行或多行注释前加
+- 逻辑块之间加空行增加可读性
 
 ####括号对齐
 - 括号前后有空格， 花括号起始 不另换行，结尾新起一行
