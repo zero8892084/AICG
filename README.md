@@ -51,7 +51,6 @@
 		│   │  ├── aicg		// 编码规范[MD]，包含各种书写规范以及校验工具
 		│   │  ├── aimd 	// 知识库[MD]，包含新人成长，以及常见疑难问题解决方案
 		│   │  └── aiat		// 工具库[MD]，包含前端开发以及自动化部署工具
-		│	│	
 		│   ├── scripts 
 		│   │  ├── lib		// 基础框架 jQuery, Zepto, Handlebars, extjs
 		│   │  ├── fn 		// 功能库 D3.js, Map.js
@@ -61,7 +60,6 @@
 		│   │  	  ├── login		// 登录 		
 		│   │  	  ├── search    // 搜索  	
 		│   │  	  └── business  // 办理  
-		│	│
 		│   ├── models 	
 		│   │  ├── widget   // 插件模块
 		│   │  │  └── collapse   
@@ -76,7 +74,6 @@
 		│   │     │  └── hbs    		
 		│   │  	  ├── login		// 登录 		
 		│   │  	  └── search    // 搜索  
-		│	│
 		│   ├── styles
 		│   │  ├── globe		// 全局样式，Less生成主题文件	
 		│   │  │  ├── default
@@ -85,7 +82,6 @@
 		│   │  │  │  └── globe.blue.css   	// 蓝色主题		
 		│   │  │  └── dark
 		│   │  │     └── globe.dark.css   	// 黑色主题
-		│   │  │   
 		│   │  └── page			
 		│   │  	  ├── login		
 		│   │     │  └── login.css   // 登录页样式				
@@ -102,10 +98,6 @@
 		│
 		└── login.html
 
-
-		src="res/ai/aijs/1.0.0/aijs.min.js"
-		src="res/ai/aiui/1.0.0/aiui.min.js"
-		src="res/ai/aiui/1.0.0/aiui.min.css"
 
 ##命名规范
 ####CSS 类名
