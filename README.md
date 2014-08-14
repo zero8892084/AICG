@@ -37,18 +37,76 @@
 
 
 ##目录结构
-```
-├── aimd
-│   └── dist
-│      ├── cg (code-guide) 编码规范
-│      ├── fe (front-end) 前端技术
-│      ├── be (back-end) 后端技术
-│      ├── ui (user interface) 界面规范
-│      ├── ue (user experience) 交互规范
-│      └── tools (development tools) 开发工具
-│
-└── index.md
-```
+- 引入亚信UED的基础前端框架，包括JS底层库，UI样式库，开发规范，自动化工具，团队知识库
+- 引入cmd,seajs,nodejs,grunt,npm,markdown等
+- 细化各级目录分类，方便清晰管理，考虑文件的部署压缩合并
+
+		my-project-name
+		│
+		├── res
+		│   ├── conf	// ajax数据接口，seajs配置，Grunt配置，npm包管理
+		│   ├── ai
+		│   │  ├── aijs		// JS库，包含基础扩展以及工具方法
+		│   │  ├── aiui		// UI库，包含样式模块以及交互组件
+		│   │  ├── aicg		// 编码规范[MD]，包含各种书写规范以及校验工具
+		│   │  ├── aimd 	// 知识库[MD]，包含新人成长，以及常见疑难问题解决方案
+		│   │  └── aiat		// 工具库[MD]，包含前端开发以及自动化部署工具
+		│	│	
+		│   ├── scripts 
+		│   │  ├── lib		// 基础框架 jQuery, Zepto, Handlebars, extjs
+		│   │  ├── fn 		// 功能库 D3.js, Map.js
+		│   │  ├── ui 		// 插件库 zTree, omGrid, My97, artDialog, autocomplete, validform
+		│   │  └── page 	
+		│   │  	  ├── common	// 公用的模块
+		│   │  	  ├── login		// 登录 		
+		│   │  	  ├── search    // 搜索  	
+		│   │  	  └── business  // 办理  
+		│	│
+		│   ├── models 	
+		│   │  ├── widget   // 插件模块
+		│   │  │  └── collapse   
+		│   │  │     ├── data   // 数据
+		│   │  │     ├── tpl    // 模版		
+		│   │  │     └── hbs    // 模版预编译	
+		│   │  │
+		│   │  └── page	
+		│   │  	  ├── common	// 公用的模块
+		│   │     │  ├── data   	
+		│   │     │  ├── tpl    			
+		│   │     │  └── hbs    		
+		│   │  	  ├── login		// 登录 		
+		│   │  	  └── search    // 搜索  
+		│	│
+		│   ├── styles
+		│   │  ├── globe		// 全局样式，Less生成主题文件	
+		│   │  │  ├── default
+		│   │  │  │  └── globe.css   		// 默认主题
+		│   │  │  ├── blue
+		│   │  │  │  └── globe.blue.css   	// 蓝色主题		
+		│   │  │  └── dark
+		│   │  │     └── globe.dark.css   	// 黑色主题
+		│   │  │   
+		│   │  └── page			
+		│   │  	  ├── login		
+		│   │     │  └── login.css   // 登录页样式				
+		│   │  	  └── search    
+        │   │        └── search.css  // 搜索页样式
+        │   │
+		│   ├── page
+		│   │  ├── search.html    // 搜索页面  	
+		│   │  └── business
+        │   │     ├── query.html    // 查询页面				
+        │   │     └── pay.html      // 充值页面				
+		│   │
+		│   └── index.html
+		│
+		└── login.html
+
+
+		src="res/ai/aijs/1.0.0/aijs.min.js"
+		src="res/ai/aiui/1.0.0/aiui.min.js"
+		src="res/ai/aiui/1.0.0/aiui.min.css"
+
 ##命名规范
 ####CSS 类名
 - 保持 Class 命名为全小写，可以使用短划线（不要使用下划线和 camelCase驼峰式命名）
@@ -101,93 +159,6 @@
 ####JavaScript，JSON文件命名
 - 多个单词组成时，采用中划线连接方式，比如说：账号模型文件 account-model.js
 
-##注释规范
-####HTML注释
-- 代码说明的注释方法，采用标签闭合的写法，与HTML标签保持格式统一
-		
-		<!-- 头部 -->
-		<div class="header">
-		    <!-- 导航 -->
-		    <ul class="nav">
-		        <li><a href="#">nav1</a></li>
-		        <li><a href="#">nav2</a></li>
-		    </ul>
-		    <!-- /导航 -->
-		</div>
-		<!-- /头部 -->
-
-- 代码本身的注释方法，单行代码的注释也保持在同行，两端空格；多行代码的注释起始和结尾都另起一行并左缩进对齐
-		
-		<!-- <h1 class="header"><a href="#">LOGO</a></h1> -->
-		<!--
-		<ul class="nav">
-		    <li><a href="#">nav1</a></li>
-		    <li><a href="#">nav2</a></li>
-		</ul>
-		-->
-
-- 注释在IE6中的BUG
-	- 如果两个浮动元素之间存在注释，那么可能导致布局错位或文字的BUG
-	- 通常这种情况，把注释去掉是最好的解决方案
-
-####CSS注释
-- 单行注释，写在被注释对象的上一行，对属性及值的注释写于分号后
-
-		/* 单行注释文字 */
-		.ui-box {
-		    border: 1px solid #ccc;
-		}
-		.ui-box-head{
-		    height:20px;
-		    line-height:20px;/* 这里是对line-height的一个注释 */
-		    overflow:hidden;
-		}
-
-- 块状注释，用于布局结构或模块，注释保持统一的缩进对齐，前面留空一行
-
-		/* 
-		 * 块状注释文字
-		 * 块状注释文字
-		 */
-		.ui-box {}
-		.ui-box-head {}
-		.ui-box-head .ui-box-head-title{}
-		.ui-box-container{}
-
-####JavaScript 注释
-- 单行注释
-	* 双斜线后，必须跟注释内容保留一个空格；
-	* 可独占一行, 前边不许有空行, 缩进与下一行代码保持一致；
-	* 位于一个代码行的末尾，双斜线距离分号四个空格，双斜线后始终保留一个空格
-
-			// Good
-			if (condition) {
-
-			    // if you made it here, then all security checks passed
-			    allowed();
-			}
-
-			var zhangsan = "zhangsan";    // 双斜线距离分号四个空格，双斜线后始终保留一个空格
-
-- 块状注释
-	* 注释代码最少三行，保持统一的缩进，前面留空一行
-	* 用于难于理解或者存在错误的代码段，也适用于HACK代码和逻辑较强的代码注释
-
-			/*
-			 * 注释内容与星标前保留一个空格
-			 */
-
-
-####JsDoc 注释
-- JsDoc 是一个根据注释规范自动生成文档的工具
-- 详细的文档规范可参考 [usejsdoc.org](http://usejsdoc.org/)
-
-		/**
-		 * here boy, look here , here is girl
-		 * @method lookGril
-		 * @param {Object} balabalabala
-		 * @return {Object} balabalabala
-		 */
 
 ##HTML
 ####基础设施
@@ -598,3 +569,90 @@
 - 避免使用`a==b`, `a!=b`， 推荐用严格比较条件 `a===b`, `a!==b`
 - 非特殊业务， 禁用`eval`,`with`
 
+##注释规范
+####HTML 注释
+- 代码说明的注释方法，采用标签闭合的写法，与HTML标签保持格式统一
+		
+		<!-- 头部 -->
+		<div class="header">
+		    <!-- 导航 -->
+		    <ul class="nav">
+		        <li><a href="#">nav1</a></li>
+		        <li><a href="#">nav2</a></li>
+		    </ul>
+		    <!-- /导航 -->
+		</div>
+		<!-- /头部 -->
+
+- 代码本身的注释方法，单行代码的注释也保持在同行，两端空格；多行代码的注释起始和结尾都另起一行并左缩进对齐
+		
+		<!-- <h1 class="header"><a href="#">LOGO</a></h1> -->
+		<!--
+		<ul class="nav">
+		    <li><a href="#">nav1</a></li>
+		    <li><a href="#">nav2</a></li>
+		</ul>
+		-->
+
+- 注释在IE6中的BUG
+	- 如果两个浮动元素之间存在注释，那么可能导致布局错位或文字的BUG
+	- 通常这种情况，把注释去掉是最好的解决方案
+
+####CSS 注释
+- 单行注释，写在被注释对象的上一行，对属性及值的注释写于分号后
+
+		/* 单行注释文字 */
+		.ui-box {
+		    border: 1px solid #ccc;
+		}
+		.ui-box-head{
+		    height:20px;
+		    line-height:20px;/* 这里是对line-height的一个注释 */
+		    overflow:hidden;
+		}
+
+- 块状注释，用于布局结构或模块，注释保持统一的缩进对齐，前面留空一行
+
+		/* 
+		 * 块状注释文字
+		 * 块状注释文字
+		 */
+		.ui-box {}
+		.ui-box-head {}
+		.ui-box-head .ui-box-head-title{}
+		.ui-box-container{}
+
+####JavaScript 注释
+- 单行注释
+	* 双斜线后，必须跟注释内容保留一个空格；
+	* 可独占一行, 前边不许有空行, 缩进与下一行代码保持一致；
+	* 位于一个代码行的末尾，双斜线距离分号四个空格，双斜线后始终保留一个空格
+
+			// Good
+			if (condition) {
+
+			    // if you made it here, then all security checks passed
+			    allowed();
+			}
+
+			var zhangsan = "zhangsan";    // 双斜线距离分号四个空格，双斜线后始终保留一个空格
+
+- 块状注释
+	* 注释代码最少三行，保持统一的缩进，前面留空一行
+	* 用于难于理解或者存在错误的代码段，也适用于HACK代码和逻辑较强的代码注释
+
+			/*
+			 * 注释内容与星标前保留一个空格
+			 */
+
+
+####JsDoc 注释
+- JsDoc 是一个根据注释规范自动生成文档的工具
+- 详细的文档规范可参考 [usejsdoc.org](http://usejsdoc.org/)
+
+		/**
+		 * here boy, look here , here is girl
+		 * @method lookGril
+		 * @param {Object} balabalabala
+		 * @return {Object} balabalabala
+		 */
